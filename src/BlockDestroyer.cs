@@ -3,11 +3,11 @@ using UnityEngine.Tilemaps;
 
 public class BlockDestroyer : MonoBehaviour
 {
-    public Tilemap tilemap; // Посилання на Tilemap, де знаходяться блоки для руйнування
-    public float destroyRadius = 1.5f; // Радіус, в якому гравець може руйнувати блоки
-    private Transform playerTransform; // Посилання на трансформ гравця
-    private GameObject currentHighlightedTile; // Поточний підсвічений блок
-    public GameObject highlightPrefab; // Префаб для підсвічування блоків
+    public Tilemap tilemap; // РџРѕСЃРёР»Р°РЅРЅСЏ РЅР° Tilemap, РґРµ Р·РЅР°С…РѕРґСЏС‚СЊСЃСЏ Р±Р»РѕРєРё РґР»СЏ СЂСѓР№РЅСѓРІР°РЅРЅСЏ
+    public float destroyRadius = 1.5f; // Р Р°РґС–СѓСЃ, РІ СЏРєРѕРјСѓ РіСЂР°РІРµС†СЊ РјРѕР¶Рµ СЂСѓР№РЅСѓРІР°С‚Рё Р±Р»РѕРєРё
+    private Transform playerTransform; // РџРѕСЃРёР»Р°РЅРЅСЏ РЅР° С‚СЂР°РЅСЃС„РѕСЂРј РіСЂР°РІС†СЏ
+    private GameObject currentHighlightedTile; // РџРѕС‚РѕС‡РЅРёР№ РїС–РґСЃРІС–С‡РµРЅРёР№ Р±Р»РѕРє
+    public GameObject highlightPrefab; // РџСЂРµС„Р°Р± РґР»СЏ РїС–РґСЃРІС–С‡СѓРІР°РЅРЅСЏ Р±Р»РѕРєС–РІ
 
     void Start()
     {
@@ -32,7 +32,7 @@ public class BlockDestroyer : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0)) // Якщо натиснута ліва кнопка миші
+        if (Input.GetMouseButton(0)) // РЇРєС‰Рѕ РЅР°С‚РёСЃРЅСѓС‚Р° Р»С–РІР° РєРЅРѕРїРєР° РјРёС€С–
         {
             DestroyBlockAtPosition(mouseTilePosition);
         }
