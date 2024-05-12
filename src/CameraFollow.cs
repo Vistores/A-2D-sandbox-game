@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; // Позиція, за якою слідує камера
-    public float smoothSpeed = 0.125f; // Плавність руху камери
-    public Vector3 offset; // Відстань між камерою і гравцем
+    public Transform target; // РџРѕР·РёС†С–СЏ, Р·Р° СЏРєРѕСЋ СЃР»С–РґСѓС” РєР°РјРµСЂР°
+    public float smoothSpeed = 0.125f; // РџР»Р°РІРЅС–СЃС‚СЊ СЂСѓС…Сѓ РєР°РјРµСЂРё
+    public Vector3 offset; // Р’С–РґСЃС‚Р°РЅСЊ РјС–Р¶ РєР°РјРµСЂРѕСЋ С– РіСЂР°РІС†РµРј
 
     void LateUpdate()
     {
         if (target != null)
         {
-            Vector3 desiredPosition = target.position + offset; // Бажана позиція камери - позиція гравця + зміщення
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime); // Плавний перехід між поточною позицією камери і бажаною позицією
-            transform.position = smoothedPosition; // Встановлення нової позиції камери
+            Vector3 desiredPosition = target.position + offset;  // Р‘Р°Р¶Р°РЅР° РїРѕР·РёС†С–СЏ РєР°РјРµСЂРё - РїРѕР·РёС†С–СЏ РіСЂР°РІС†СЏ + Р·РјС–С‰РµРЅРЅСЏ
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime); // РџР»Р°РІРЅРёР№ РїРµСЂРµС…С–Рґ РјС–Р¶ РїРѕС‚РѕС‡РЅРѕСЋ РїРѕР·РёС†С–С”СЋ РєР°РјРµСЂРё С– Р±Р°Р¶Р°РЅРѕСЋ РїРѕР·РёС†С–С”СЋ 
+            transform.position = smoothedPosition;  // Р’СЃС‚Р°РЅРѕРІР»РµРЅРЅСЏ РЅРѕРІРѕС— РїРѕР·РёС†С–С— РєР°РјРµСЂРё
         }
     }
 }
