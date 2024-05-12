@@ -5,26 +5,26 @@ using static System.Net.Mime.MediaTypeNames;
 
 public class MainMenu : MonoBehaviour
 {
-    public Button startButton; // Кнопка для переходу до наступної сцени
-    public Button exitButton; // Кнопка для виходу з гри
-    public string nextSceneName; // Назва наступної сцени
+    public Button startButton; // РљРЅРѕРїРєР° РґР»СЏ РїРµСЂРµС…РѕРґСѓ РґРѕ РЅР°СЃС‚СѓРїРЅРѕС— СЃС†РµРЅРё
+    public Button exitButton; // РљРЅРѕРїРєР° РґР»СЏ РІРёС…РѕРґСѓ Р· РіСЂРё
+    public string nextSceneName; // РќР°Р·РІР° РЅР°СЃС‚СѓРїРЅРѕС— СЃС†РµРЅРё
 
     void Start()
     {
-        // Додаємо функції до подій кнопок
+        // С„СѓРЅРєС†С–С— РґРѕ РїРѕРґС–Р№ РєРЅРѕРїРѕРє
         startButton.onClick.AddListener(StartGame);
         exitButton.onClick.AddListener(ExitGame);
     }
 
     public void StartGame()
     {
-        // Перехід до наступної сцени (якщо така є)
+        // РџРµСЂРµС…С–Рґ РґРѕ РЅР°СЃС‚СѓРїРЅРѕС— СЃС†РµРЅРё
         SceneManager.LoadScene(nextSceneName);
     }
 
     public void ExitGame()
     {
-        // Закриття гри
+        // Р—Р°РєСЂРёС‚С‚СЏ РіСЂРё
         UnityEngine.Application.Quit();
     }
 }
