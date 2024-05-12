@@ -4,27 +4,27 @@ using UnityEngine.SceneManagement;
 
 public class ButtonActions : MonoBehaviour
 {
-    public Button closeButton; // Кнопка для закриття інтерфейсу
-    public Button menuButton; // Кнопка для переходу до меню
-    public GameObject menuCanvas; // Посилання на Canvas з меню
-    public string menuSceneName; // Назва сцени меню
+    public Button closeButton; // РљРЅРѕРїРєР° РґР»СЏ Р·Р°РєСЂРёС‚С‚СЏ С–РЅС‚РµСЂС„РµР№СЃСѓ
+    public Button menuButton; // РљРЅРѕРїРєР° РґР»СЏ РїРµСЂРµС…РѕРґСѓ РґРѕ РјРµРЅСЋ
+    public GameObject menuCanvas; // РџРѕСЃРёР»Р°РЅРЅСЏ РЅР° Canvas Р· РјРµРЅСЋ
+    public string menuSceneName; // РќР°Р·РІР° СЃС†РµРЅРё РіРѕР»РѕРІРЅРѕРіРѕ РјРµРЅСЋ
 
     void Start()
     {
-        // Додаємо функції до подій кнопок
+        //С„СѓРЅРєС†С–С— РґРѕ РїРѕРґС–Р№ РєРЅРѕРїРѕРє
         closeButton.onClick.AddListener(CloseInterface);
         menuButton.onClick.AddListener(GoToMenu);
     }
 
     public void CloseInterface()
     {
-        // Закриття інтерфейсу (відображенням меню)
+        // Р—Р°РєСЂРёС‚С‚СЏ С–РЅС‚РµСЂС„РµР№СЃСѓ (РІС–РґРѕР±СЂР°Р¶РµРЅРЅСЏРј РјРµРЅСЋ)
         menuCanvas.SetActive(false);
     }
 
     public void GoToMenu()
     {
-        // Перехід до вказаної сцени (головного меню)
+        // РџРµСЂРµС…С–Рґ РґРѕ РІРєР°Р·Р°РЅРѕС— СЃС†РµРЅРё (РіРѕР»РѕРІРЅРѕРіРѕ РјРµРЅСЋ)
         SceneManager.LoadScene(menuSceneName);
     }
 }
