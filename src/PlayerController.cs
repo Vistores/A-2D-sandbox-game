@@ -5,57 +5,57 @@ public class PlayerController : MonoBehaviour
     public string selectedCharacterName;
     public UnityEngine.UI.Text characterNameText;
     public GameObject inventoryCanvas;
-    public Sprite[] walkSprites; // Масив спрайтів для анімації ходьби
-    public float moveSpeed = 5f; // Швидкість руху гравця
-    public float jumpForce = 10f; // Сила стрибка гравця
+    public Sprite[] walkSprites; // РњР°СЃРёРІ СЃРїСЂР°Р№С‚С–РІ РґР»СЏ Р°РЅС–РјР°С†С–С— С…РѕРґСЊР±Рё
+    public float moveSpeed = 5f; // РЁРІРёРґРєС–СЃС‚СЊ СЂСѓС…Сѓ РіСЂР°РІС†СЏ
+    public float jumpForce = 10f; // РЎРёР»Р° СЃС‚СЂРёР±РєР° РіСЂР°РІС†СЏ
 
-    private Rigidbody2D rb; // Rigidbody гравця
-    private bool isGrounded = false; // Позначає, чи гравець знаходиться на землі
-    private SpriteRenderer spriteRenderer; // Компонент для зміни спрайтів
+    private Rigidbody2D rb; // Rigidbody РіСЂР°РІС†СЏ
+    private bool isGrounded = false; // РџРѕР·РЅР°С‡Р°С”, С‡Рё РіСЂР°РІРµС†СЊ Р·РЅР°С…РѕРґРёС‚СЊСЃСЏ РЅР° Р·РµРјР»С–
+    private SpriteRenderer spriteRenderer; // РљРѕРјРїРѕРЅРµРЅС‚ РґР»СЏ Р·РјС–РЅРё СЃРїСЂР°Р№С‚С–РІ
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Завантаження імені персонажа
+        // Р—Р°РІР°РЅС‚Р°Р¶РµРЅРЅСЏ С–РјРµРЅС– РїРµСЂСЃРѕРЅР°Р¶Р°
         selectedCharacterName = PlayerPrefs.GetString("SelectedCharacter");
         characterNameText.text = selectedCharacterName;
 
-        // Завантаження інформації про положення гравця
+        // Р—Р°РІР°РЅС‚Р°Р¶РµРЅРЅСЏ С–РЅС„РѕСЂРјР°С†С–С— РїСЂРѕ РїРѕР»РѕР¶РµРЅРЅСЏ РіСЂР°РІС†СЏ
         LoadPlayerPosition();
     }
 
     void Update()
     {
-        // Відображення або приховання інвентаря при натисканні Esc або "E"
+        // Р’С–РґРѕР±СЂР°Р¶РµРЅРЅСЏ Р°Р±Рѕ РїСЂРёС…РѕРІР°РЅРЅСЏ С–РЅРІРµРЅС‚Р°СЂСЏ РїСЂРё РЅР°С‚РёСЃРєР°РЅРЅС– Esc Р°Р±Рѕ "E"
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.E))
         {
             ToggleInventory();
         }
 
-        // Рух гравця
+        // Р СѓС… РіСЂР°РІС†СЏ
         float horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector2.right * horizontalInput * moveSpeed * Time.deltaTime);
 
-        // Поворот гравця в сторону руху
+        // РџРѕРІРѕСЂРѕС‚ РіСЂР°РІС†СЏ РІ СЃС‚РѕСЂРѕРЅСѓ СЂСѓС…Сѓ
         if (horizontalInput > 0)
         {
-            spriteRenderer.flipX = false; // Поворот гравця вправо
+            spriteRenderer.flipX = false; // РџРѕРІРѕСЂРѕС‚ РіСЂР°РІС†СЏ РІРїСЂР°РІРѕ
         }
         else if (horizontalInput < 0)
         {
-            spriteRenderer.flipX = true; // Поворот гравця вліво
+            spriteRenderer.flipX = true; // РџРѕРІРѕСЂРѕС‚ РіСЂР°РІС†СЏ РІР»С–РІРѕ
         }
 
-        // Стрибок гравця
+        // РЎС‚СЂРёР±РѕРє РіСЂР°РІС†СЏ
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = Vector2.up * jumpForce;
-            isGrounded = false; // Встановлюємо прапорець "isGrounded" в false, оскільки гравець зараз у повітрі
+            isGrounded = false; // Р’СЃС‚Р°РЅРѕРІР»СЋС”РјРѕ РїСЂР°РїРѕСЂРµС†СЊ "isGrounded" РІ false, РѕСЃРєС–Р»СЊРєРё РіСЂР°РІРµС†СЊ Р·Р°СЂР°Р· Сѓ РїРѕРІС–С‚СЂС–
         }
 
-        // Відтворення анімації ходьби
+        // Р’С–РґС‚РІРѕСЂРµРЅРЅСЏ Р°РЅС–РјР°С†С–С— С…РѕРґСЊР±Рё
         if (Mathf.Abs(horizontalInput) > 0.1f)
         {
             PlayWalkAnimation();
@@ -64,38 +64,38 @@ public class PlayerController : MonoBehaviour
 
     void PlayWalkAnimation()
     {
-        // Змінюємо спрайт гравця для анімації ходьби
+        // Р—РјС–РЅСЋС”РјРѕ СЃРїСЂР°Р№С‚ РіСЂР°РІС†СЏ РґР»СЏ Р°РЅС–РјР°С†С–С— С…РѕРґСЊР±Рё
         int spriteIndex = Mathf.FloorToInt(Time.time * 10) % walkSprites.Length;
         spriteRenderer.sprite = walkSprites[spriteIndex];
     }
 
     private void LoadPlayerPosition()
     {
-        // Отримання позиції гравця з PlayerPrefs
+        // РћС‚СЂРёРјР°РЅРЅСЏ РїРѕР·РёС†С–С— РіСЂР°РІС†СЏ Р· PlayerPrefs
         float playerX = PlayerPrefs.GetFloat(selectedCharacterName + "_PlayerX", 0f);
         float playerY = PlayerPrefs.GetFloat(selectedCharacterName + "_PlayerY", 0f);
         Vector3 playerPosition = new Vector3(playerX, playerY, 0f);
 
-        // Переміщення гравця на його позицію
+        // РџРµСЂРµРјС–С‰РµРЅРЅСЏ РіСЂР°РІС†СЏ РЅР° Р№РѕРіРѕ РїРѕР·РёС†С–СЋ
         transform.position = playerPosition;
     }
 
     private void ToggleInventory()
     {
-        // Відображення або приховання інвентаря
+        // Р’С–РґРѕР±СЂР°Р¶РµРЅРЅСЏ Р°Р±Рѕ РїСЂРёС…РѕРІР°РЅРЅСЏ С–РЅРІРµРЅС‚Р°СЂСЏ
         inventoryCanvas.SetActive(!inventoryCanvas.activeSelf);
     }
 
     public void SavePlayerPosition()
     {
-        // Збереження позиції гравця у PlayerPrefs
+        // Р—Р±РµСЂРµР¶РµРЅРЅСЏ РїРѕР·РёС†С–С— РіСЂР°РІС†СЏ Сѓ PlayerPrefs
         PlayerPrefs.SetFloat(selectedCharacterName + "_PlayerX", transform.position.x);
         PlayerPrefs.SetFloat(selectedCharacterName + "_PlayerY", transform.position.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Перевірка, чи гравець дотикається до платформи
-        isGrounded = true; // Встановлюємо прапорець "isGrounded" в true, оскільки гравець торкається будь-якої колізії
+        // РџРµСЂРµРІС–СЂРєР°, С‡Рё РіСЂР°РІРµС†СЊ РґРѕС‚РёРєР°С”С‚СЊСЃСЏ РґРѕ РїР»Р°С‚С„РѕСЂРјРё
+        isGrounded = true; // Р’СЃС‚Р°РЅРѕРІР»СЋС”РјРѕ РїСЂР°РїРѕСЂРµС†СЊ "isGrounded" РІ true, РѕСЃРєС–Р»СЊРєРё РіСЂР°РІРµС†СЊ С‚РѕСЂРєР°С”С‚СЊСЃСЏ Р±СѓРґСЊ-СЏРєРѕС— РєРѕР»С–Р·С–С—
     }
 }
