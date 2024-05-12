@@ -89,7 +89,7 @@ public class CharacterManager : MonoBehaviour
         string json = JsonUtility.ToJson(new CharacterData(characters));
         PlayerPrefs.SetString("Characters", json);
 
-        // Зберегти дані інвентаря для кожного персонажа
+        // Р—Р±РµСЂРµРіС‚Рё РґР°РЅС– С–РЅРІРµРЅС‚Р°СЂСЏ РґР»СЏ РєРѕР¶РЅРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°
         foreach (Character character in characters)
         {
             string characterInventoryKey = character.name + "_Inventory";
@@ -106,7 +106,7 @@ public class CharacterManager : MonoBehaviour
             CharacterData data = JsonUtility.FromJson<CharacterData>(json);
             characters = data.characters;
 
-            // Завантаження інвентаря для кожного персонажа
+            // Р—Р°РІР°РЅС‚Р°Р¶РµРЅРЅСЏ С–РЅРІРµРЅС‚Р°СЂСЏ РґР»СЏ РєРѕР¶РЅРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°
             foreach (Character character in characters)
             {
                 string characterInventoryKey = character.name + "_Inventory";
