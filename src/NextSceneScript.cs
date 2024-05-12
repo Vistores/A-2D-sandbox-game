@@ -7,13 +7,13 @@ public class NextSceneScript : MonoBehaviour
     public GameObject playerPrefab;
     public string selectedCharacterName;
     public Sprite groundSprite;
-    public Sprite grassSprite; // Спрайт трави
+    public Sprite grassSprite;
     public int worldWidth = 100;
     public int worldHeight = 100;
     public float perlinScale = 0.1f;
     public float threshold = 0.5f;
-    public Tilemap worldTilemap;
-    public GameObject menuCanvas; // Посилання на Canvas з меню
+    public Tilemap worldTilemap; // РџРѕСЃРёР»Р°РЅРЅСЏ РЅР° Tilemap СЃРІС–С‚Сѓ
+    public GameObject menuCanvas; // РџРѕСЃРёР»Р°РЅРЅСЏ РЅР° Canvas Р· РјРµРЅСЋ
 
     void Start()
     {
@@ -62,39 +62,36 @@ public class NextSceneScript : MonoBehaviour
                 worldTilemap.SetTile(tilePosition, tile);
             }
 
-            // Заміна верхніх крайніх блоків на блоки трави
+            // Р—Р°РјС–РЅР° РІРµСЂС…РЅС–С… РєСЂР°Р№РЅС–С… Р±Р»РѕРєС–РІ РЅР° Р±Р»РѕРєРё С‚СЂР°РІРё
             Vector3Int grassTilePosition = new Vector3Int(x, surfaceHeight - 1, 0);
             Tile grassTile = ScriptableObject.CreateInstance<Tile>();
             grassTile.sprite = grassSprite;
             worldTilemap.SetTile(grassTilePosition, grassTile);
         }
 
-        // Зберегти дані світу для персонажа
+        // Р—Р±РµСЂРµРіС‚Рё РґР°РЅС– СЃРІС–С‚Сѓ РґР»СЏ РїРµСЂСЃРѕРЅР°Р¶Р°
         PlayerPrefs.SetInt(selectedCharacterName + "_WorldWidth", worldWidth);
         PlayerPrefs.SetInt(selectedCharacterName + "_WorldHeight", worldHeight);
     }
 
     private void LoadPlayer()
     {
-        // Отримання позиції гравця з PlayerPrefs
+        // РћС‚СЂРёРјР°РЅРЅСЏ РїРѕР·РёС†С–С— РіСЂР°РІС†СЏ Р· PlayerPrefs
         float playerX = PlayerPrefs.GetFloat(selectedCharacterName + "_PlayerX", worldWidth / 2f);
         float playerY = PlayerPrefs.GetFloat(selectedCharacterName + "_PlayerY", worldHeight / 2f);
         Vector3 playerPosition = new Vector3(playerX, playerY, 0f);
-
-        // Немає потреби створювати гравця на сцені, тому цей виклик видаляємо
-        // Instantiate(playerPrefab, playerPosition, Quaternion.identity);
 
         UnityEngine.Debug.Log("Player loaded with selected character: " + selectedCharacterName);
     }
 
     private void SaveWorld()
     {
-        // Збереження данних світу для обраного персонажа
-        // Записуємо розміри світу
+        // Р—Р±РµСЂРµР¶РµРЅРЅСЏ РґР°РЅРЅРёС… СЃРІС–С‚Сѓ РґР»СЏ РѕР±СЂР°РЅРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°
+        // Р—Р°РїРёСЃСѓС”РјРѕ СЂРѕР·РјС–СЂРё СЃРІС–С‚Сѓ
         PlayerPrefs.SetInt(selectedCharacterName + "_WorldWidth", worldWidth);
         PlayerPrefs.SetInt(selectedCharacterName + "_WorldHeight", worldHeight);
 
-        // Записуємо положення блоків світу
+        // Р—Р°РїРёСЃСѓС”РјРѕ РїРѕР»РѕР¶РµРЅРЅСЏ Р±Р»РѕРєС–РІ СЃРІС–С‚Сѓ
         for (int x = 0; x < worldWidth; x++)
         {
             for (int y = 0; y < worldHeight; y++)
@@ -103,12 +100,12 @@ public class NextSceneScript : MonoBehaviour
                 TileBase tile = worldTilemap.GetTile(tilePosition);
                 if (tile != null)
                 {
-                    // Якщо на місці (x, y) є блок, то зберігаємо його тип
+                    // РЇРєС‰Рѕ РЅР° РјС–СЃС†С– (x, y) С” Р±Р»РѕРє, С‚Рѕ Р·Р±РµСЂС–РіР°С”РјРѕ Р№РѕРіРѕ С‚РёРї
                     PlayerPrefs.SetInt(selectedCharacterName + "_Tile_" + x + "_" + y, 1);
                 }
                 else
                 {
-                    // Якщо на місці (x, y) немає блоку, то зберігаємо 0
+                    // РЇРєС‰Рѕ РЅР° РјС–СЃС†С– (x, y) РЅРµРјР°С” Р±Р»РѕРєСѓ, С‚Рѕ Р·Р±РµСЂС–РіР°С”РјРѕ 0
                     PlayerPrefs.SetInt(selectedCharacterName + "_Tile_" + x + "_" + y, 0);
                 }
             }
@@ -117,36 +114,36 @@ public class NextSceneScript : MonoBehaviour
 
     private void SavePlayerPosition(Vector3 playerPosition)
     {
-        // Збереження позиції гравця у PlayerPrefs
+        // Р—Р±РµСЂРµР¶РµРЅРЅСЏ РїРѕР·РёС†С–С— РіСЂР°РІС†СЏ Сѓ PlayerPrefs
         PlayerPrefs.SetFloat(selectedCharacterName + "_PlayerX", playerPosition.x);
         PlayerPrefs.SetFloat(selectedCharacterName + "_PlayerY", playerPosition.y);
     }
 
     public void NextScene()
     {
-        // Перехід до наступної сцени
+        // РџРµСЂРµС…С–Рґ РґРѕ РЅР°СЃС‚СѓРїРЅРѕС— СЃС†РµРЅРё
         SavePlayerPosition(GameObject.FindGameObjectWithTag("Player").transform.position);
         SceneManager.LoadScene("NextSceneName");
     }
 
     public void OpenMenu()
     {
-        // Відображення Canvas з меню
+        // Р’С–РґРѕР±СЂР°Р¶РµРЅРЅСЏ Canvas Р· РјРµРЅСЋ
         menuCanvas.SetActive(true);
     }
 
     public void ReturnToMainMenu()
     {
-        // Повернення до головного меню
+        // РџРѕРІРµСЂРЅРµРЅРЅСЏ РґРѕ РіРѕР»РѕРІРЅРѕРіРѕ РјРµРЅСЋ
         SceneManager.LoadScene("MainMenuScene");
     }
 
     void Update()
     {
-        // Перевірка натискання клавіші "ESC"
+       // РџРµСЂРµРІС–СЂРєР° РЅР°С‚РёСЃРєР°РЅРЅСЏ РєР»Р°РІС–С€С– "ESC"
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // Відкриття меню
+            // Р’С–РґРєСЂРёС‚С‚СЏ РјРµРЅСЋ
             OpenMenu();
         }
     }
