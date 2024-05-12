@@ -4,52 +4,52 @@ using UnityEngine.Tilemaps;
 
 public class InventoryManager : MonoBehaviour
 {
-    public Tile[] blockTiles; // Масив тайлів блоків, які можуть бути в інвентарі
-    public UnityEngine.UI.Image[] inventorySlots; // Слоти інвентаря для відображення блоків
-    public GameObject highlightPrefab; // Префаб для підсвічування обраного блоку
-    private GameObject currentHighlight; // Поточна підсвітка обраного блоку
-    public float placeRadius = 1.5f; // Радіус встановлення блоків
-    private int selectedBlockIndex = 0; // Індекс обраного блоку
+    public Tile[] blockTiles; // РњР°СЃРёРІ С‚Р°Р№Р»С–РІ Р±Р»РѕРєС–РІ, СЏРєС– РјРѕР¶СѓС‚СЊ Р±СѓС‚Рё РІ С–РЅРІРµРЅС‚Р°СЂС–
+    public UnityEngine.UI.Image[] inventorySlots; // РЎР»РѕС‚Рё С–РЅРІРµРЅС‚Р°СЂСЏ РґР»СЏ РІС–РґРѕР±СЂР°Р¶РµРЅРЅСЏ Р±Р»РѕРєС–РІ
+    public GameObject highlightPrefab; // РџСЂРµС„Р°Р± РґР»СЏ РїС–РґСЃРІС–С‡СѓРІР°РЅРЅСЏ РѕР±СЂР°РЅРѕРіРѕ Р±Р»РѕРєСѓ
+    private GameObject currentHighlight; // РџРѕС‚РѕС‡РЅР° РїС–РґСЃРІС–С‚РєР° РѕР±СЂР°РЅРѕРіРѕ Р±Р»РѕРєСѓ
+    public float placeRadius = 1.5f; // Р Р°РґС–СѓСЃ РІСЃС‚Р°РЅРѕРІР»РµРЅРЅСЏ Р±Р»РѕРєС–РІ
+    private int selectedBlockIndex = 0; // Р†РЅРґРµРєСЃ РѕР±СЂР°РЅРѕРіРѕ Р±Р»РѕРєСѓ
 
-    private Transform playerTransform; // Позиція гравця
+    private Transform playerTransform; // РџРѕР·РёС†С–СЏ РіСЂР°РІС†СЏ
 
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        UpdateInventoryUI(); // Оновлення інвентаря при запуску
+        UpdateInventoryUI(); // РћРЅРѕРІР»РµРЅРЅСЏ С–РЅРІРµРЅС‚Р°СЂСЏ РїСЂРё Р·Р°РїСѓСЃРєСѓ
     }
 
     void Update()
     {
-        // Зміна обраного блоку в інвентарі
-        if (Input.GetKeyDown(KeyCode.Alpha1) && blockTiles.Length > 0) // При натисканні "1"
+        // Р—РјС–РЅР° РѕР±СЂР°РЅРѕРіРѕ Р±Р»РѕРєСѓ РІ С–РЅРІРµРЅС‚Р°СЂС–
+        if (Input.GetKeyDown(KeyCode.Alpha1) && blockTiles.Length > 0) 
         {
             selectedBlockIndex = 0;
             UpdateInventoryUI();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && blockTiles.Length > 1) // При натисканні "2"
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && blockTiles.Length > 1) 
         {
             selectedBlockIndex = 1;
             UpdateInventoryUI();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && blockTiles.Length > 2) // При натисканні "3"
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && blockTiles.Length > 2) 
         {
             selectedBlockIndex = 2;
             UpdateInventoryUI();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4) && blockTiles.Length > 3) // При натисканні "4"
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && blockTiles.Length > 3)
         {
             selectedBlockIndex = 3;
             UpdateInventoryUI();
         }
 
-        // Встановлення обраного блоку в світі при натисканні правої кнопки миші
-        if (Input.GetMouseButton(1)) // При тривалому зажимі ПКМ
+        // Р’СЃС‚Р°РЅРѕРІР»РµРЅРЅСЏ РѕР±СЂР°РЅРѕРіРѕ Р±Р»РѕРєСѓ РІ СЃРІС–С‚С– РїСЂРё РЅР°С‚РёСЃРєР°РЅРЅС– РїСЂР°РІРѕС— РєРЅРѕРїРєРё РјРёС€С–
+        if (Input.GetMouseButton(1)) // РџСЂРё С‚СЂРёРІР°Р»РѕРјСѓ Р·Р°Р¶РёРјС– РџРљРњ
         {
             SetSelectedBlockInWorld();
         }
 
-        // Видалення підсвітки при натисканні клавіші "E"
+        // Р’РёРґР°Р»РµРЅРЅСЏ РїС–РґСЃРІС–С‚РєРё РїСЂРё РЅР°С‚РёСЃРєР°РЅРЅС– РєР»Р°РІС–С€С– "E"
         if (Input.GetKeyDown(KeyCode.E))
         {
             ClearHighlight();
@@ -58,61 +58,61 @@ public class InventoryManager : MonoBehaviour
 
     void SetSelectedBlockInWorld()
     {
-        // Отримання позиції курсора миші в світі
+        // РћС‚СЂРёРјР°РЅРЅСЏ РїРѕР·РёС†С–С— РєСѓСЂСЃРѕСЂР° РјРёС€С– РІ СЃРІС–С‚С–
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // Перевірка відстані між позицією миші та позицією гравця
+        // РџРµСЂРµРІС–СЂРєР° РІС–РґСЃС‚Р°РЅС– РјС–Р¶ РїРѕР·РёС†С–С”СЋ РјРёС€С– С‚Р° РїРѕР·РёС†С–С”СЋ РіСЂР°РІС†СЏ
         if (Vector3.Distance(mouseWorldPosition, playerTransform.position) > placeRadius)
         {
-            // Позиція миші занадто далеко від гравця, тому не встановлюємо блок
+            // РџРѕР·РёС†С–СЏ РјРёС€С– Р·Р°РЅР°РґС‚Рѕ РґР°Р»РµРєРѕ РІС–Рґ РіСЂР°РІС†СЏ, С‚РѕРјСѓ РЅРµ РІСЃС‚Р°РЅРѕРІР»СЋС”РјРѕ Р±Р»РѕРє
             return;
         }
 
-        // Отримання тайла з обраного індексу в інвентарі
+        // РћС‚СЂРёРјР°РЅРЅСЏ С‚Р°Р№Р»Р° Р· РѕР±СЂР°РЅРѕРіРѕ С–РЅРґРµРєСЃСѓ РІ С–РЅРІРµРЅС‚Р°СЂС–
         Tile selectedBlockTile = blockTiles[selectedBlockIndex];
 
-        // Отримання Tilemap, на якому розміщений блок
+        // РћС‚СЂРёРјР°РЅРЅСЏ Tilemap, РЅР° СЏРєРѕРјСѓ СЂРѕР·РјС–С‰РµРЅРёР№ Р±Р»РѕРє
         Tilemap tilemap = FindObjectOfType<Tilemap>();
 
-        // Перетворення позиції миші в координати Tilemap
+        // РџРµСЂРµС‚РІРѕСЂРµРЅРЅСЏ РїРѕР·РёС†С–С— РјРёС€С– РІ РєРѕРѕСЂРґРёРЅР°С‚Рё Tilemap
         Vector3Int tilePosition = tilemap.WorldToCell(mouseWorldPosition);
 
-        // Встановлення обраного блоку в світі за позицією миші
+        // Р’СЃС‚Р°РЅРѕРІР»РµРЅРЅСЏ РѕР±СЂР°РЅРѕРіРѕ Р±Р»РѕРєСѓ РІ СЃРІС–С‚С– Р·Р° РїРѕР·РёС†С–С”СЋ РјРёС€С–
         tilemap.SetTile(tilePosition, selectedBlockTile);
     }
 
     void UpdateInventoryUI()
     {
-        // Оновлення відображення інвентаря
+        // РћРЅРѕРІР»РµРЅРЅСЏ РІС–РґРѕР±СЂР°Р¶РµРЅРЅСЏ С–РЅРІРµРЅС‚Р°СЂСЏ
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             UnityEngine.UI.Image slotImage = inventorySlots[i];
             if (i < blockTiles.Length)
             {
-                // Відображення блоків у слотах
+                // Р’С–РґРѕР±СЂР°Р¶РµРЅРЅСЏ Р±Р»РѕРєС–РІ Сѓ СЃР»РѕС‚Р°С…
                 slotImage.sprite = Sprite.Create(blockTiles[i].sprite.texture, new Rect(0, 0, blockTiles[i].sprite.texture.width, blockTiles[i].sprite.texture.height), new Vector2(0.5f, 0.5f));
             }
             else
             {
-                // Очищення слоту відображення
+                // РћС‡РёС‰РµРЅРЅСЏ СЃР»РѕС‚Сѓ РІС–РґРѕР±СЂР°Р¶РµРЅРЅСЏ
                 slotImage.sprite = null;
             }
         }
 
-        // Видалення попередньої підсвітки, якщо вона існує
+        // Р’РёРґР°Р»РµРЅРЅСЏ РїРѕРїРµСЂРµРґРЅСЊРѕС— РїС–РґСЃРІС–С‚РєРё, СЏРєС‰Рѕ РІРѕРЅР° С–СЃРЅСѓС”
         if (currentHighlight != null)
         {
             Destroy(currentHighlight);
         }
 
-        // Створення нової підсвітки для обраного блоку
+        // РЎС‚РІРѕСЂРµРЅРЅСЏ РЅРѕРІРѕС— РїС–РґСЃРІС–С‚РєРё РґР»СЏ РѕР±СЂР°РЅРѕРіРѕ Р±Р»РѕРєСѓ
         currentHighlight = Instantiate(highlightPrefab, inventorySlots[selectedBlockIndex].transform.position, Quaternion.identity);
-        currentHighlight.transform.SetParent(inventorySlots[selectedBlockIndex].transform); // Встановлення батьківського об'єкту підсвітки
+        currentHighlight.transform.SetParent(inventorySlots[selectedBlockIndex].transform); // Р’СЃС‚Р°РЅРѕРІР»РµРЅРЅСЏ Р±Р°С‚СЊРєС–РІСЃСЊРєРѕРіРѕ РѕР±'С”РєС‚Сѓ РїС–РґСЃРІС–С‚РєРё
     }
 
     void ClearHighlight()
     {
-        // Видалення підсвітки обраного блоку
+        // Р’РёРґР°Р»РµРЅРЅСЏ РїС–РґСЃРІС–С‚РєРё РѕР±СЂР°РЅРѕРіРѕ Р±Р»РѕРєСѓ
         if (currentHighlight != null)
         {
             Destroy(currentHighlight);
