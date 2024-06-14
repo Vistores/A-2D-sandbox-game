@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
-    // UI елементи для налаштувань
+    // UI РµР»РµРјРµРЅС‚Рё РґР»СЏ РЅР°Р»Р°С€С‚СѓРІР°РЅСЊ
     public Toggle fullscreenToggle;
     public Slider cameraZoomSlider;
     public Slider placeRadiusSlider;
@@ -11,38 +11,38 @@ public class SettingsManager : MonoBehaviour
     public Toggle disableTextToggle;
     public UnityEngine.UI.Text disableTextElement;
 
-    // Ключі для зберігання налаштувань у PlayerPrefs
+    // РљР»СЋС‡С– РґР»СЏ Р·Р±РµСЂС–РіР°РЅРЅСЏ РЅР°Р»Р°С€С‚СѓРІР°РЅСЊ Сѓ PlayerPrefs
     private const string FullscreenPrefsKey = "Fullscreen";
     private const string CameraZoomPrefsKey = "CameraZoom";
     private const string PlaceRadiusPrefsKey = "PlaceRadius";
     private const string DestroyRadiusPrefsKey = "DestroyRadius";
     private const string TextElementEnabledPrefsKey = "TextElementEnabled";
 
-    public Camera mainCamera; // Посилання на головну камеру
+    public Camera mainCamera; // РџРѕСЃРёР»Р°РЅРЅСЏ РЅР° РіРѕР»РѕРІРЅСѓ РєР°РјРµСЂСѓ
 
     void Start()
     {
-        // Підписка на події зміни флажка і текстового елемента
+        // РџРѕРґС–С— Р·РјС–РЅРё С„Р»Р°Р¶РєР° С– С‚РµРєСЃС‚РѕРІРѕРіРѕ РµР»РµРјРµРЅС‚Р°
         fullscreenToggle.onValueChanged.AddListener(OnFullscreenToggleChanged);
         cameraZoomSlider.onValueChanged.AddListener(OnCameraZoomChanged);
         placeRadiusSlider.onValueChanged.AddListener(OnPlaceRadiusChanged);
         destroyRadiusSlider.onValueChanged.AddListener(OnDestroyRadiusChanged);
         disableTextToggle.onValueChanged.AddListener(OnDisableTextToggleChanged);
 
-        // Завантаження налаштувань при запуску
+        // Р—Р°РІР°РЅС‚Р°Р¶РµРЅРЅСЏ РЅР°Р»Р°С€С‚СѓРІР°РЅСЊ РїСЂРё Р·Р°РїСѓСЃРєСѓ
         LoadSettings();
     }
 
     private void LoadSettings()
     {
-        // Завантаження налаштувань з PlayerPrefs
+        // Р—Р°РІР°РЅС‚Р°Р¶РµРЅРЅСЏ РЅР°Р»Р°С€С‚СѓРІР°РЅСЊ Р· PlayerPrefs
         bool isFullscreen = GetBoolSetting(FullscreenPrefsKey, true);
         float cameraZoom = GetFloatSetting(CameraZoomPrefsKey, 1f);
         float placeRadius = GetFloatSetting(PlaceRadiusPrefsKey, 0f);
         float destroyRadius = GetFloatSetting(DestroyRadiusPrefsKey, 0f);
         bool isTextElementEnabled = GetBoolSetting(TextElementEnabledPrefsKey, true);
 
-        // Встановлення значень у відповідні UI елементи
+        // Р’СЃС‚Р°РЅРѕРІР»РµРЅРЅСЏ Р·РЅР°С‡РµРЅСЊ Сѓ РІС–РґРїРѕРІС–РґРЅС– UI РµР»РµРјРµРЅС‚Рё
         fullscreenToggle.isOn = isFullscreen;
         cameraZoomSlider.value = cameraZoom;
         placeRadiusSlider.value = placeRadius;
@@ -50,44 +50,42 @@ public class SettingsManager : MonoBehaviour
         disableTextToggle.isOn = isTextElementEnabled;
         disableTextElement.gameObject.SetActive(isTextElementEnabled);
 
-        // Встановлення посилання на головну камеру
+        // Р’СЃС‚Р°РЅРѕРІР»РµРЅРЅСЏ РїРѕСЃРёР»Р°РЅРЅСЏ РЅР° РіРѕР»РѕРІРЅСѓ РєР°РјРµСЂСѓ
         mainCamera = Camera.main;
     }
 
     private void OnFullscreenToggleChanged(bool isOn)
     {
-        // Зміна налаштувань за допомогою флажка повноекранного режиму
+        // Р—РјС–РЅР° РЅР°Р»Р°С€С‚СѓРІР°РЅСЊ Р·Р° РґРѕРїРѕРјРѕРіРѕСЋ С„Р»Р°Р¶РєР° РїРѕРІРЅРѕРµРєСЂР°РЅРЅРѕРіРѕ СЂРµР¶РёРјСѓ
         Screen.fullScreen = isOn;
     }
 
     private void OnCameraZoomChanged(float value)
     {
-        // Логіка зміни налаштувань для збільшення камери
+        // Р›РѕРіС–РєР° Р·РјС–РЅРё РЅР°Р»Р°С€С‚СѓРІР°РЅСЊ РґР»СЏ Р·Р±С–Р»СЊС€РµРЅРЅСЏ РєР°РјРµСЂРё
         if (mainCamera != null)
         {
-            mainCamera.orthographicSize = value; // Зміна зуму камери
+            mainCamera.orthographicSize = value; // Р—РјС–РЅР° Р·СѓРјСѓ РєР°РјРµСЂРё
         }
     }
 
     private void OnPlaceRadiusChanged(float value)
     {
-        // Логіка зміни налаштувань для радіусу встановлення блоків
-        // Тут можна виконати необхідні дії для зміни радіусу встановлення блоків
+    
     }
 
     private void OnDestroyRadiusChanged(float value)
     {
-        // Логіка зміни налаштувань для радіусу руйнування блоків
-        // Тут можна виконати необхідні дії для зміни радіусу руйнування блоків
+        
     }
 
     private void OnDisableTextToggleChanged(bool isOn)
     {
-        // Зміна стану текстового елемента за допомогою флажка
+        // Р—РјС–РЅР° СЃС‚Р°РЅСѓ С‚РµРєСЃС‚РѕРІРѕРіРѕ РµР»РµРјРµРЅС‚Р° Р·Р° РґРѕРїРѕРјРѕРіРѕСЋ С„Р»Р°Р¶РєР°
         disableTextElement.gameObject.SetActive(!isOn);
     }
 
-    // Статичні методи для збереження та завантаження налаштувань
+    // РЎС‚Р°С‚РёС‡РЅС– РјРµС‚РѕРґРё РґР»СЏ Р·Р±РµСЂРµР¶РµРЅРЅСЏ С‚Р° Р·Р°РІР°РЅС‚Р°Р¶РµРЅРЅСЏ РЅР°Р»Р°С€С‚СѓРІР°РЅСЊ
 
     public static void SetBoolSetting(string key, bool value)
     {
