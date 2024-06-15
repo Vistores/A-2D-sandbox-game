@@ -15,4 +15,4 @@
 * C#.
 
 ## Опублікований продукт
-Інсталяційний пакет створеної гри можна завантажити з магазину itch.io: https://vistores.itch.io/sandbox
+Інсталяційний пакет створеної гри можна завантажити з магазину itch.io: [https://vistores.itch.io/sandbox](https://vistores.itch.io/sandbox)
